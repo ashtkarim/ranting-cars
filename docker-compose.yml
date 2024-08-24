@@ -18,12 +18,12 @@ services:
       - ./server:/app
 
 
-  mongo:
-    image: mongo:latest
+  mysql:
+    image: mysql
     ports:
-      - "27017:27017"
+      - "3306:3306"
     volumes:
       - ./data:/data/db
 
 volumes:
-  mongo-data:
+  mysql-data:

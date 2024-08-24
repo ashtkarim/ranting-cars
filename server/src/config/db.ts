@@ -1,13 +1,12 @@
-import mongoose from "mongoose";
+import { createClient } from 'redis';
 
-const connectDB = async () => {
-  try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/rental");
-    console.log("MongoDB connected");
-  } catch (error) {
-    console.error("MongoDB connection error:", error);
-    process.exit(1);
-  }
-};
+const redisClient = createClient({
+  socket: {
+    host: 'localhost', 
+    port: 6379,
+  },
+});
 
-export default connectDB;
+redisClient.connect().catch(console.error);
+
+export default redisClient ;

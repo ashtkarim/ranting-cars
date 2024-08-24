@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { generateToken } from "../config/token";
 import { v4 as uuidv4 } from "uuid";
+import  redisClient from "../config/db";
 
 const prisma = new PrismaClient();
 
@@ -23,9 +24,10 @@ export const login = async (req: Request, res: Response) => {
 
     if (findUser && (await bcrypt.compare(password, findUser.password))) {
       const token: string = generateToken(findUser.id);
+      await redisClient.set(token,findUser.id,{EX:3600})
+      res.cookie('token',token,{maxAge:3600*1000})
       return res.status(200).json({
         message: "Login successful",
-        token,
         user: {
           id: findUser.id,
           email: findUser.email,
