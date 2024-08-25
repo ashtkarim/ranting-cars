@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import UserRoutes from "./routes/UserRoutes";
-import cookieParser from 'cookie-parser';
-import verifyToken from "./config/middleware";
+import CarRoutes from "./routes/CarRoutes";
+import cookieParser from "cookie-parser";
 
 const cors = require("cors");
 
@@ -16,7 +16,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/user", UserRoutes);
-
+app.use("/car", CarRoutes);
 
 // app.get('/p', verifyToken, (req: Request, res: Response) => {
 //   const userData=req.userData;
