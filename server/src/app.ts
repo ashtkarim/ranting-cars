@@ -17,10 +17,11 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/user", UserRoutes);
 
-app.get('/p', verifyToken, (req: Request, res: Response) => {
-  const userData=req.userData;
-  res.status(200).json({ message:userData });
-});
+
+// app.get('/p', verifyToken, (req: Request, res: Response) => {
+//   const userData=req.userData;
+//   res.status(200).json({ message:userData });
+// });
 
 app.listen("4000", () => {
   console.log("Server is runing ");

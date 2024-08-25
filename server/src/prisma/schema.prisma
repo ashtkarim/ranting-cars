@@ -21,5 +21,23 @@ model User {
   email     String   @unique
   password  String
   status    String   @default("Normal")
-  verified  Boolean  @default(false)
+  verified  Boolean  @default(false) 
+  
+  cars      Car[]
+}
+
+
+model Car {
+  id            Int      @id @default(autoincrement())
+  make          String  
+  model         String   
+  year          Int      
+  color         String   
+  price         Float    
+  mileage       Int?     
+  vin           String   @unique     
+
+  ownerId  String 
+  owner    User   @relation(fields: [ownerId], references: [id])
+
 }
