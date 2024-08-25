@@ -28,7 +28,7 @@ model User {
 
 
 model Car {
-  id            Int      @id @default(autoincrement())
+  id            String     @id @default(uuid()) @db.VarChar(36)
   make          String  
   model         String   
   year          Int      

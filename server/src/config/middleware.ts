@@ -10,9 +10,8 @@ declare global {
   }
 
 
-const verifyToken= async (req:Request,res:Response,next:NextFunction)=>{
+export const verifyToken= async (req:Request,res:Response,next:NextFunction)=>{
     try{
-
         const token =req.cookies['token']
         if (!token) {
             return res.status(401).json({error:"Token not found in cookies"});
@@ -29,5 +28,3 @@ const verifyToken= async (req:Request,res:Response,next:NextFunction)=>{
         return res.status(500).json({error:'Internal server error'})
     }
 }
-
-export default verifyToken;

@@ -1,6 +1,6 @@
 import express from "express";
 import { me, registerUser, login } from "../Controllers/UserControllers";
-import verifyToken from "../config/middleware";
+import {verifyToken} from "../config/middleware";
 
 let UserRoutes = express();
 
