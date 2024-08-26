@@ -24,6 +24,7 @@ model User {
   verified  Boolean  @default(false) 
   
   cars      Car[]
+  rentals   Rental[]
 }
 
 
@@ -40,4 +41,27 @@ model Car {
   ownerId  String 
   owner    User   @relation(fields: [ownerId], references: [id])
 
+  rentals       Rental[]
+
+}
+
+model Rental {
+  id            String       @id @default(uuid()) @db.VarChar(36)
+  userId        String
+  carId         String
+  startDate     DateTime
+  endDate       DateTime
+  totalAmount   Float
+  status        RentalStatus @default(RESERVED)
+
+  user          User      @relation(fields: [userId], references: [id])
+  car           Car       @relation(fields: [carId], references: [id])
+}
+
+
+enum RentalStatus {
+  RESERVED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
 }
