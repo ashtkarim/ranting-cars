@@ -17,7 +17,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/user", UserRoutes);
-// app.use("/car", CarRoutes);
+app.use("/car", CarRoutes);
 
 app.get('/p', verifyToken, (req: Request, res: Response) => {
   console.log('hhhh')

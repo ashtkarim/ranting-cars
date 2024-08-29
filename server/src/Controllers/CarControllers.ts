@@ -5,23 +5,25 @@ import { v4 as uuidv4 } from "uuid";
 const prisma= new PrismaClient()
 
 export const createCar = async (req:Request,res:Response)=>{
-    const ownerId= req.userData
+    const ownerId= req.userData as string ;
+
     const { make, model, year, color, price, mileage, vin } = req.body;
+    if(!make || !model || !year || !color || !price || !mileage || !vin){
+        return res.status(400).json({message:"all fields are required"})
+    }
 
     try {
         const car = await prisma.car.create({
-          data: {
-            id:uuidv4(),
-            make,
-            model,
-            year,
-            color,
-            price,
-            mileage,
-            vin,
-            ownerId,
-          },
-        });
+            data:{
+                make,
+                model,
+                year,
+                color,
+                price,
+                mileage,
+                vin,
+                ownerId,
+        }});
         res.status(200).json({ message:"car added seccefully "});
       } catch (error) {
         res.status(500).json({ error: "Error creating car", details: error });
@@ -94,8 +96,8 @@ export const getMyCars =async (req:Request,res:Response)=>{
         const cars= await prisma.car.findMany({
             where:{ownerId}
         })
-        res.status(200).json({data:cars})
+        return res.status(200).json({cars})
     } catch (error) {
-        res.status(500).json({message:"500 internal server error "})
+        return res.status(500).json({message:"500 internal server error "})
     }
 }
