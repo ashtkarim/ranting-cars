@@ -1,4 +1,4 @@
-import React, { createContext, useState} from 'react';
+import React, { createContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -6,9 +6,9 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
-    
+
     const token = localStorage.getItem('Token');
-    
+
     const [isAuthenticated, setIsAuthenticated] = useState(token ? true : false);
 
     const login = async (email, password) => {
@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
             setIsAuthenticated(true);
             navigate('/dashboard');
         } catch (error) {
-            console.error('Login failed', error);
+            alert(error.response.data.message);
         }
     };
 
