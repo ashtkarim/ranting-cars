@@ -1,19 +1,15 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const token = localStorage.getItem('Token');
-        if (token) {
-            setIsAuthenticated(true);
-        }
-    }, []);
+    
+    const token = localStorage.getItem('Token');
+    
+    const [isAuthenticated, setIsAuthenticated] = useState(token ? true : false);
 
     const login = async (email, password) => {
         try {
