@@ -43,7 +43,7 @@ export const login = async (req: Request, res: Response) => {
 
     if (findUser && (await bcrypt.compare(password, findUser.password))) {
       const token: string = generateToken(findUser.id);
-      res.cookie("jwt", token, { maxAge: 3600 * 1000 });
+      res.set('Token', token);
       return res.status(200).json({
         message: "Login successful",
         user: {
@@ -64,6 +64,7 @@ export const login = async (req: Request, res: Response) => {
 
 export const registerUser = async (req: Request, res: Response) => {
   const { firstName, lastName, email, password } = req.body;
+  console.log(firstName, lastName, email, password);
 
   if (!firstName || !lastName || !email || !password) {
     return res
