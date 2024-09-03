@@ -21,6 +21,7 @@ app.use("/car", CarRoutes);
 
 app.get('/p', verifyToken, (req: Request, res: Response) => {
   console.log('hhhh')
+  res.send('hhhh')
 });
 
 app.listen("4000", () => {

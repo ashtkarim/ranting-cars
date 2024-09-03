@@ -37,7 +37,7 @@ model Car {
   price         Float    
   mileage       Int?     
   vin           String   @unique     
-
+  imageUrl      String
   ownerId  String 
   owner    User   @relation(fields: [ownerId], references: [id])
 

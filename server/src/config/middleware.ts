@@ -14,9 +14,9 @@ declare global {
 
 export const verifyToken= async (req:Request,res:Response,next:NextFunction)=>{
     try{
-        const token =req.cookies['jwt']
+        const token:string = req.headers["token"] as string;
         if (!token) {
-            return res.status(401).json({error:"Token not found in cookies"});
+            return res.status(401).json({error:"Token not found in headers"});
         }
         const decoded= jwt.verify(token,"hello1234") as JwtPayload;
         if (!decoded || !decoded.id) {

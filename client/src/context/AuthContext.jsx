@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
             const response = await axios.post('http://localhost:4000/user/login', { email, password });
             localStorage.setItem('Token', response.headers.get('Token'));
             setIsAuthenticated(true);
-            navigate('/dashboard');
+            navigate('/');
         } catch (error) {
             alert(error.response.data.message);
         }
