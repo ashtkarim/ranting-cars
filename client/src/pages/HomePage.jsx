@@ -8,6 +8,7 @@ import NavBar from '../components/NavBar';
 const HomePage = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem('token');
 
 
   // Fetch cars from the API
@@ -32,6 +33,7 @@ const HomePage = () => {
       <NavBar />
 
       {/* Hero Section */}
+
       <section className="bg-blue-500 text-white text-center h-screen flex flex-col justify-center items-center"
         style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
 
@@ -39,11 +41,15 @@ const HomePage = () => {
           <div className="text-center">
             <h1 className="text-6xl font-bold text-white shadow-black">Rent Your Dream Car Today</h1>
             <p className="mt-4 text-lg font-bold shadow-xl">Explore our vast collection of luxury cars at unbeatable prices. Discover your dream car today!</p>
-            <Link to="/register">
-              <button className="mt-4 px-6 py-3 bg-yellow-400 text-blue-900 font-semibold rounded-lg">
-                Get Started
-              </button>
-            </Link>
+            {token ? (
+              <Link to="/register">
+                <button className="mt-4 px-6 py-3 bg-yellow-400 text-blue-900 font-semibold rounded-lg">
+                  Get Started
+                </button>
+              </Link>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </section>

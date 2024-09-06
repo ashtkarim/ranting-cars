@@ -37,10 +37,8 @@ const Login = () => {
                 <div className="flex justify-between items-center">
 
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Login</button>
-
-
-
                     <Link to="/register" className="block text-sm text-blue-500 hover:text-blue-700">Don't have an account?</Link>
+
                 </div>
             </form>
         </div>
