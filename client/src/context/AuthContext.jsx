@@ -13,7 +13,7 @@ const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const response = await axios.post('http://localhost:4000/user/login', { email, password });
+            const response = await axios.post('http://localhost:4000/auth/login', { email, password });
             localStorage.setItem('Token', response.headers.get('Token'));
             setIsAuthenticated(true);
             navigate('/');

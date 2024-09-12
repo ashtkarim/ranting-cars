@@ -1,24 +1,20 @@
-import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { generateToken } from "../config/token";
-import { v4 as uuidv4 } from "uuid";
-
-const prisma = new PrismaClient();
+import { Agency, IAgency } from "../models/Agency";
 
 export const me = async (req: Request, res: Response) => {
-  const userId = req.userData;
+  const userId = req.userData ;
   if (!userId) {
     return res.status(400).json({ message: "User ID not provided" });
   }
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-    });
+    console.log("userId",userId);
+    const user = await Agency.findById(userId);
+    console.log("user",user);
     if (user) {
-      const { password, id, ...filteredUser } = user;
-      return res.status(200).json({ user: filteredUser });
+      const { password, _id, ...filteredUser } = user.toObject();
+      return res.status(200).json({ user: filteredUser});
     } else {
       return res.status(404).json({ message: "user not found" });
     }
@@ -28,7 +24,7 @@ export const me = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body; 
 
   if (!email || !password) {
     return res
@@ -37,9 +33,7 @@ export const login = async (req: Request, res: Response) => {
   }
 
   try {
-    const findUser = await prisma.user.findUnique({
-      where: { email },
-    });
+    const findUser = await Agency.findOne({email});
 
     if (findUser && (await bcrypt.compare(password, findUser.password))) {
       const token: string = generateToken(findUser.id);
@@ -49,9 +43,8 @@ export const login = async (req: Request, res: Response) => {
         user: {
           id: findUser.id,
           email: findUser.email,
-          firstName: findUser.firstName,
-          lastName: findUser.lastName,
-        },
+          name: findUser.name,
+        }
       });
     } else {
       return res.status(400).json({ message: "Incorrect Email or Password" });
@@ -63,31 +56,24 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const registerUser = async (req: Request, res: Response) => {
-  const { firstName, lastName, email, password } = req.body;
-  console.log(firstName, lastName, email, password);
+  const agance : IAgency = req.body ; 
 
-  if (!firstName || !lastName || !email || !password) {
+  if (!agance.name || !agance.email || !agance.password || !agance.address) {
     return res
       .status(400)
       .json({ message: "Name, email, and password are required" });
   }
   try {
-    const existingEmail = await prisma.user.findUnique({
-      where: { email },
-    });
+    const existingEmail = await Agency.findOne({email: agance.email });
     if (existingEmail) {
       return res.status(400).json({ message: "Email already exists" });
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await prisma.user.create({
-      data: {
-        id: uuidv4(),
-        firstName,
-        lastName,
-        email,
-        password: hashedPassword,
-      },
+    const hashedPassword = await bcrypt.hash(agance.password, 10);
+    const user = await Agency.create({
+      ...agance,
+      password: hashedPassword,
     });
+
     return res.status(200).json({ message: "User registered successfully" });
   } catch (error) {
     console.error("Error during user registration:", error);
@@ -97,4 +83,4 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
-export default { me,registerUser, login };
+export default { me, registerUser, login };

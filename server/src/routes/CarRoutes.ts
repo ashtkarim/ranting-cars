@@ -1,13 +1,13 @@
-import express from "express";
-import {verifyToken} from "../config/middleware";
-import { createCar,getAllCars,getCarById,getMyCars,updateCar } from "../Controllers/CarControllers";
+import express from 'express';
+import * as carController from '../Controllers/CarControllers';
+import { authenticateToken ,authorizeCarOwner} from '../middleware/auth';
 
-let CarRoutes = express();
+const router = express.Router();
+router.get('/mycars',authenticateToken,carController.getMyCars)
+router.post('/', authenticateToken, carController.createCar);
+router.get('/', carController.getAllCars);
+router.get('/:id', carController.getCarById);
+router.put('/:id', authenticateToken, authorizeCarOwner, carController.updateCar);
+router.delete('/:id', authenticateToken, authorizeCarOwner, carController.deleteCar);
 
-CarRoutes.get('/mycars',verifyToken,getMyCars)
-CarRoutes.post('/',verifyToken,createCar)
-CarRoutes.get('/',getAllCars)
-CarRoutes.get('/:id',getCarById)
-CarRoutes.put('/:id',updateCar)
-
-export default CarRoutes;
+export default router;
