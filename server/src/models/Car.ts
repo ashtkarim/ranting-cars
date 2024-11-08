@@ -9,7 +9,6 @@ interface ICar {
     mileage:number;
     vin:string;
     imageUrl:string;
-    licensePlate: string;
     agencyId: string;
 }
 
@@ -22,7 +21,6 @@ const CarSchema = new mongoose.Schema({
     mileage: { type: Number, required: true },
     vin: { type: String, required: true, unique: true },
     imageUrl: { type: String, required: true },
-    licensePlate: { type: String, required: true },
     agencyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Agency', required: true } 
 });
 

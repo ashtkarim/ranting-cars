@@ -4,10 +4,12 @@ import { AuthProvider } from './context/AuthContext';
 import HomePage from './pages/HomePage';
 import Login from './components/Login';
 import Register from './components/Register';
-import Dashboard from './pages/Dashboard';
 import PrivateRoute from './routes/PrivateRoute';
 import Cars from './pages/Cars';
 import Agancies from './pages/Agancies';
+import MyCars from './pages/mycars';
+import AddCar from './pages/addcars';
+import Profile from './pages/Profile';
 
 const App = () => {
   return (
@@ -18,11 +20,28 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/cars" element={<Cars />} />
         <Route path="/agencies" element={<Agancies />} />
+
         <Route
-          path="/dashboard"
+          path="/mycars"
           element={
             <PrivateRoute>
-              <Dashboard />
+              <MyCars />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/addcar"
+          element={
+            <PrivateRoute>
+              <AddCar />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
             </PrivateRoute>
           }
         />

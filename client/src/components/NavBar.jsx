@@ -2,8 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { IoLogOutOutline } from 'react-icons/io5';
-import { IoLogInOutline } from 'react-icons/io5';
 
 const NavBar = () => {
 
@@ -11,7 +9,6 @@ const NavBar = () => {
     const { logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
-    const [showPopover, setShowPopover] = useState(false);
     useEffect(() => {
         const fetchUserFullName = async () => {
             try {
@@ -30,57 +27,40 @@ const NavBar = () => {
         }
     }, [token]);
     return (
-        <>
-            <header className="bg-white shadow-md p-4  items-center fixed top-0 w-full z-10">
-                <nav className='flex justify-between items-center'>
-                    <div className="text-2xl font-bold pr-4">
-                        <Link to="/">Ranting Cars</Link>
+        <header className="bg-white shadow-md p-4  fixed top-0 w-full z-10 ">
+            {token ? (
+                <nav className="flex justify-between items-center">
+                    <div className="flex items-center space-x-4">
+                        <Link to="/mycars">My Cars</Link>
+                        <Link to="/addcar" >Add Car</Link>
                     </div>
-                    <div className='flex items-center'>
-
-                        <div className='pr-4'>
-                            <Link to="/" >Home</Link>
+                    <div className='flex justify-between  item-center'>
+                        <div onClick={() => navigate('/profile')} className="px-4 py-2">
+                            {userInfo.name}
                         </div>
-                        <div className='pr-4'>
-                            <Link to="/cars" >Cars</Link>
-                        </div>
-                        <div className='pr-4'>
-                            <Link to="/agencies" >Agencies</Link>
-                        </div>
-                    </div>
-                    <div>
-                        {token ? (
-                            <div className="flex items-center">
-                                <>
-                                    <Link to="/addCar" className="bg-green-500 text-white px-4 py-2 rounded-lg ml-4">Add Car</Link>
-                                    <Link to="/sellerDashboard" className="bg-blue-500 text-white px-4 py-2 rounded-lg ml-4">Seller Dashboard</Link>
-                                </>
-
-                                <div onClick={() => navigate('/profile')}>
-                                    {userInfo.name}
-                                </div>
-                                <div></div>
-                                <button className="bg-red-500 text-white px-4 py-2 rounded-lg ml-4" onClick={logout}>
-                                    <IoLogOutOutline />
-                                </button>
-                            </div>
-                        ) : (
-
-                            <div className="flex items-center" >
-                                <Link to="/login" className="bg-blue-500 text-white px-4 py-2 rounded-lg ml-4">
-                                    Login
-                                </Link>
-                                <Link to="/register" className="bg-green-500 text-white px-4 py-2 rounded-lg ml-4">
-                                    Register
-                                </Link>
-                            </div>
-
-                        )
-                        }
+                        <button className="bg-red-500 text-white px-4 py-2 rounded-lg " onClick={logout}>
+                            logout
+                        </button>
                     </div>
                 </nav>
-            </header >
-        </>
+            ) : (
+                <nav className="flex justify-between items-center w-full">
+                    <div className="flex items-center space-x-4">
+                        <Link to="/" className="text-gray-700">Home</Link>
+                        <Link to="/cars" className="text-gray-700">Cars</Link>
+                        <Link to="/agencies" className="text-gray-700">Agencies</Link>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                        <Link to="/login" className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+                            Login
+                        </Link>
+                        <Link to="/register" className="bg-green-500 text-white px-4 py-2 rounded-lg">
+                            Register
+                        </Link>
+                    </div>
+                </nav>
+            )}
+        </header>
     );
 };
 

@@ -4,17 +4,15 @@ import { generateToken } from "../config/token";
 import { Agency, IAgency } from "../models/Agency";
 
 export const me = async (req: Request, res: Response) => {
-  const userId = req.userData ;
+  const userId = req.userData;
   if (!userId) {
     return res.status(400).json({ message: "User ID not provided" });
   }
   try {
-    console.log("userId",userId);
     const user = await Agency.findById(userId);
-    console.log("user",user);
     if (user) {
       const { password, _id, ...filteredUser } = user.toObject();
-      return res.status(200).json({ user: filteredUser});
+      return res.status(200).json({ user: filteredUser });
     } else {
       return res.status(404).json({ message: "user not found" });
     }
@@ -24,7 +22,7 @@ export const me = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body; 
+  const { email, password } = req.body;
 
   if (!email || !password) {
     return res
@@ -33,18 +31,19 @@ export const login = async (req: Request, res: Response) => {
   }
 
   try {
-    const findUser = await Agency.findOne({email});
+    const findUser = await Agency.findOne({ email });
 
     if (findUser && (await bcrypt.compare(password, findUser.password))) {
       const token: string = generateToken(findUser.id);
-      res.set('Token', token);
+      console.log(token);
+      res.set("Token", token);
       return res.status(200).json({
         message: "Login successful",
         user: {
           id: findUser.id,
           email: findUser.email,
           name: findUser.name,
-        }
+        },
       });
     } else {
       return res.status(400).json({ message: "Incorrect Email or Password" });
@@ -56,7 +55,7 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const registerUser = async (req: Request, res: Response) => {
-  const agance : IAgency = req.body ; 
+  const agance: IAgency = req.body;
 
   if (!agance.name || !agance.email || !agance.password || !agance.address) {
     return res
@@ -64,7 +63,7 @@ export const registerUser = async (req: Request, res: Response) => {
       .json({ message: "Name, email, and password are required" });
   }
   try {
-    const existingEmail = await Agency.findOne({email: agance.email });
+    const existingEmail = await Agency.findOne({ email: agance.email });
     if (existingEmail) {
       return res.status(400).json({ message: "Email already exists" });
     }

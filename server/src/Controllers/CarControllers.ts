@@ -1,16 +1,18 @@
 import { Request, Response } from "express";
-import {Car,ICar} from "../models/Car"
+import {Car,ICar} from "../models/Car";
+import multer from "multer";
+
+// Set up multer for file storage
 
 export const createCar = async (req:Request,res:Response)=>{
     const ownerId= req.userData as string ;
-    
+    const car:ICar = {...(req.body),agencyId:ownerId};
+    console.log(car)
 
-    const car:ICar = req.body;
-    car.agencyId=ownerId
-    if(!car.make || !car.model || !car.year || !car.licensePlate|| !car.price || !car.mileage || !car.vin || !car.imageUrl){
+    if(!car.make || !car.model || !car.year || !car.color || !car.price || !car.mileage || !car.vin || !car.imageUrl || !car.agencyId){
         return res.status(400).json({message:"all fields are required"})
     }
-
+    
     try {
         await Car.create(car);
         res.status(200).json({ message:"car added seccefully "});
@@ -71,16 +73,20 @@ export const getMyCars =async (req:Request,res:Response)=>{
 }
 
 export const deleteCar = async (req: Request, res: Response) => {
-    const { id } = req.params;
+  const { id } = req.params;
+  console.log('Attempting to delete car with id:', id);
 
-    try {
-        const car = await Car.findById(id);
-        if (!car) {
-            return res.status(404).json({ message: "Car not found" });
-        }
-        await Car.deleteOne({_id:id});
-        res.status(200).json({ message: "Car deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ error: "Error deleting car", details: error });
-    }
+  try {
+      const car = await Car.findById(id);
+      if (!car) {
+          console.log('Car not found:', id);
+          return res.status(404).json({ message: "Car not found" });
+      }
+      await Car.deleteOne({_id: id});
+      console.log('Car deleted successfully:', id);
+      res.status(200).json({ message: "Car deleted successfully" });
+  } catch (error) {
+      console.error('Error deleting car:', error);
+      res.status(500).json({ error: "Error deleting car", details: error});
+  }
 };

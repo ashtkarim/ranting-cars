@@ -4,8 +4,6 @@ import NavBar from '../components/NavBar';
 
 const Agancies = () => {
     const [agencies, setAgencies] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchAgencies = async () => {
@@ -13,10 +11,8 @@ const Agancies = () => {
                 const response = await axios.get('http://localhost:4000/agency');
                 setAgencies(response.data);
                 console.log(response.data);
-                setLoading(false);
             } catch (err) {
-                setError(err.message);
-                setLoading(false);
+                console.error(err)
             }
         };
 
