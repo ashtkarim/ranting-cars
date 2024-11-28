@@ -4,29 +4,20 @@ import NavBar from '../components/NavBar';
 
 const Cars = () => {
     const [cars, setCars] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
     useEffect(() => {
         const fetchCars = async () => {
             try {
                 const response = await axios.get('http://localhost:4000/car?max=20');
                 setCars(response.data);
-                setLoading(false);
             } catch (err) {
-                setError(err.message);
-                setLoading(false);
+                console.log(err)
             }
         };
-
         fetchCars();
     }, []);
 
-
-
     return (
         <div className="">
-
             <NavBar />
             <div className="container mx-auto p-20">
                 <h1 className="text-2xl font-bold mb-4 ">Latest Cars</h1>
@@ -49,15 +40,12 @@ const Cars = () => {
                                     <div className="p-2">
                                         <p className="text-gray-700">VIN: {car.vin}</p>
                                         <p className="text-gray-700">Color: {car.color}</p>
-                                        <p className="text-gray-700">License Plate: {car.licensePlate}</p>
                                     </div>
                                     <div className="flex-end p-4">
                                         <button className="bg-blue-500 text-white px-4 py-2 rounded">Rent</button>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
                     ))}
                 </div>

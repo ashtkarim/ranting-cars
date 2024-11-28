@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import NavBar from "../components/NavBar";
-
-
 const MyCars = () => {
     const [mycars, setMycars] = useState([])
-
     const token = localStorage.getItem("Token")
-
     useEffect(() => {
         const fetchMyCars = async () => {
             try {
@@ -22,7 +18,6 @@ const MyCars = () => {
                 console.error('Error fetching cars:', error);
             }
         };
-
         fetchMyCars();
     }, [token]);
 
@@ -36,7 +31,6 @@ const MyCars = () => {
             });
             window.location.reload();
             console.log('Delete response:', response.data);
-            // Handle successful deletion (e.g., update UI, show success message)
         } catch (error) {
             console.error("Error in deleting car:", error);
             if (error.response) {
@@ -46,14 +40,12 @@ const MyCars = () => {
             } else {
                 console.error('Error setting up request:', error.message);
             }
-            // Handle error (e.g., show error message to user)
         }
     }
 
 
     return (
         <div className="">
-
             <NavBar />
             <div className="container mx-auto p-20">
                 <h1 className="text-2xl font-bold mb-4 ">Your Cars</h1>
@@ -76,7 +68,6 @@ const MyCars = () => {
                                     <div className="p-2">
                                         <p className="text-gray-700">VIN: {car.vin}</p>
                                         <p className="text-gray-700">Color: {car.color}</p>
-                                        <p className="text-gray-700">VIN: {car.vin}</p>
                                     </div>
                                     <div className="flex-end p-4 flex flex-col">
                                         {/* <button className="bg-blue-500 text-white px-4 py-2 rounded m-3"  >update</button> */}

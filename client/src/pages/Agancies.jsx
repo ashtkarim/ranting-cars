@@ -4,7 +4,6 @@ import NavBar from '../components/NavBar';
 
 const Agancies = () => {
     const [agencies, setAgencies] = useState([]);
-
     useEffect(() => {
         const fetchAgencies = async () => {
             try {
@@ -15,11 +14,8 @@ const Agancies = () => {
                 console.error(err)
             }
         };
-
         fetchAgencies();
     }, []);
-
-
 
     return (
         <div className="">
@@ -31,7 +27,7 @@ const Agancies = () => {
                     {agencies.map(agency => (
                         <div key={agency._id} className="bg-gray-100 shadow-lg rounded-lg overflow-hidden flex flex-row ">
                             <img
-                                src={agency.imageUrl}
+                                src={agency.imageUrl ? agency.imageUrl : "https://res.cloudinary.com/duum7wzdo/image/upload/v1731091263/nhmh4ii9mcbjnribizl2.webp" }
                                 alt={agency.name}
                                 className="w-1/4 h-48 object-cover p-4 rounded"
                             />
@@ -43,18 +39,15 @@ const Agancies = () => {
                                     <div className='p-3' onClick={() => { console.log(agency._id) }}>
                                         rent
                                     </div>
-
                                 </div>
                                 <div className="flex flex-row justify-between w-1/2">
                                     <div className="p-2">
                                         <p className="text-gray-700">Address: {agency.address}</p>
-                                        <p className="text-gray-700">Phone Number: {agency.phoneNumber}</p>
-                                        <p className="text-gray-700">Description: {agency.description}</p>
+                                        {agency.phoneNumber? <p className="text-gray-700">Phone Number: {agency.phoneNumber}</p>:<></>}
+                                        {agency.description?<p className="text-gray-700">Description: {agency.description}</p>:<></>}
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
                     ))}
                 </div>

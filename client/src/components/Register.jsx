@@ -45,7 +45,8 @@ const Register = () => {
                 window.location.href = '/login';
             }
         } catch (err) {
-            alert(err.response.data.message);
+            console.log(err)
+            // alert(err.response.data.message);
         }
 
     };
