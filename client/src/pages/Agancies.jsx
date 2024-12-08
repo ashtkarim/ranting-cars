@@ -36,9 +36,6 @@ const Agancies = () => {
                                     <div className='text-xl font-bold mb-2'>
                                         {agency.name}
                                     </div>
-                                    <div className='p-3' onClick={() => { console.log(agency._id) }}>
-                                        rent
-                                    </div>
                                 </div>
                                 <div className="flex flex-row justify-between w-1/2">
                                     <div className="p-2">

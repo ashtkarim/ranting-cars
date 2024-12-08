@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
+import { useNavigate } from 'react-router-dom';
 
 const Cars = () => {
     const [cars, setCars] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchCars = async () => {
             try {
@@ -23,7 +25,7 @@ const Cars = () => {
                 <h1 className="text-2xl font-bold mb-4 ">Latest Cars</h1>
                 <div className="flex flex-col gap-4">
                     {cars.map(car => (
-                        <div key={car._id} className="bg-gray-100 shadow-lg rounded-lg overflow-hidden flex flex-row ">
+                        <div key={car._id} className="bg-gray-100 shadow-lg rounded-lg overflow-hidden flex flex-row " onClick={()=>navigate(`/car/${car._id}`)}>
                             <img
                                 src={car.imageUrl}
                                 alt={car.name}
@@ -40,9 +42,6 @@ const Cars = () => {
                                     <div className="p-2">
                                         <p className="text-gray-700">VIN: {car.vin}</p>
                                         <p className="text-gray-700">Color: {car.color}</p>
-                                    </div>
-                                    <div className="flex-end p-4">
-                                        <button className="bg-blue-500 text-white px-4 py-2 rounded">Rent</button>
                                     </div>
                                 </div>
                             </div>

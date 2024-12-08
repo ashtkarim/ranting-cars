@@ -50,6 +50,7 @@ const MyCars = () => {
             <div className="container mx-auto p-20">
                 <h1 className="text-2xl font-bold mb-4 ">Your Cars</h1>
                 <div className="flex flex-col gap-4">
+                    
                     {mycars.map(car => (
                         <div key={car._id} className="bg-gray-100 shadow-lg rounded-lg overflow-hidden flex flex-row ">
                             <img
@@ -70,7 +71,6 @@ const MyCars = () => {
                                         <p className="text-gray-700">Color: {car.color}</p>
                                     </div>
                                     <div className="flex-end p-4 flex flex-col">
-                                        {/* <button className="bg-blue-500 text-white px-4 py-2 rounded m-3"  >update</button> */}
                                         <button className="bg-red-500 text-white px-4 py-2 rounded m-3" onClick={() => { OnDelete(car._id) }}  >delete</button>
 
                                     </div>

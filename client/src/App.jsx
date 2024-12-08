@@ -10,6 +10,7 @@ import Agancies from './pages/Agancies';
 import MyCars from './pages/mycars';
 import AddCar from './pages/addcars';
 import Profile from './pages/Profile';
+import CarInfo from './pages/CarInfo';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/cars" element={<Cars />} />
+        <Route path="/car/:id" element={<CarInfo />} />
         <Route path="/agencies" element={<Agancies />} />
 
         <Route

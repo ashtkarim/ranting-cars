@@ -1,13 +1,18 @@
 import { Request, Response } from "express";
 import { Car, ICar } from "../models/Car";
-import multer from "multer";
+import { Agency, IAgency } from "../models/Agency";
 
 // Set up multer for file storage
 
 export const createCar = async (req: Request, res: Response) => {
   const ownerId = req.userData as string;
   const car: ICar = { ...req.body, agencyId: ownerId };
-  console.log(car);
+  try {
+    const agancy = await Agency.findById(ownerId);
+    console.log(agancy);
+  } catch (error) {
+    return res.status(500).json({ error: "likich", details: error });
+  }
 
   if (
     !car.make ||
@@ -26,7 +31,7 @@ export const createCar = async (req: Request, res: Response) => {
     await Car.create(car);
     res.status(200).json({ message: "car added seccefully " });
   } catch (error) {
-    res.status(500).json({ error: "Error creating car", details: error });
+    res.status(500).json({ error: "error in adding car", details: error });
   }
 };
 

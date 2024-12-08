@@ -31,7 +31,9 @@ export const login = async (req: Request, res: Response) => {
   }
 
   try {
-    const findUser = await Agency.findOne({ email });
+    const findUser = await Agency.findOne({
+      email: { $regex: new RegExp(`^${email}$`, "i") },
+    });
 
     if (findUser && (await bcrypt.compare(password, findUser.password))) {
       const token: string = generateToken(findUser.id);
