@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
+import { backendUrl } from '../config/ip';
 
 const AddCar = () => {
     const [sbumitB, setSubmitB] = useState(false)
@@ -60,7 +61,7 @@ const AddCar = () => {
 
         try {
             console.log(carData)
-            const response = await axios.post('http://localhost:4000/car', carData, {
+            const response = await axios.post(`${backendUrl}/car`, carData, {
 
                 headers: {
                     'Token': localStorage.getItem('Token'),

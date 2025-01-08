@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
+import { backendUrl } from '../config/ip';
 
 const Cars = () => {
     const [cars, setCars] = useState([]);
@@ -9,7 +10,7 @@ const Cars = () => {
     useEffect(() => {
         const fetchCars = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/car?max=20');
+                const response = await axios.get(`${backendUrl}/car?max=20`);
                 setCars(response.data);
             } catch (err) {
                 console.log(err)

@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { backendUrl } from '../config/ip';
 
 const NavBar = () => {
 
@@ -12,7 +13,7 @@ const NavBar = () => {
     useEffect(() => {
         const fetchUserFullName = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/auth/me', {
+                const response = await axios.get(`${backendUrl}/auth/me`, {
                     headers: {
                         'Token': token
                     }

@@ -29,12 +29,10 @@ export const login = async (req: Request, res: Response) => {
       .status(400)
       .json({ message: "Email and password are required!" });
   }
-
   try {
     const findUser = await Agency.findOne({
       email: { $regex: new RegExp(`^${email}$`, "i") },
     });
-
     if (findUser && (await bcrypt.compare(password, findUser.password))) {
       const token: string = generateToken(findUser.id);
       console.log(token);

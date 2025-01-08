@@ -4,6 +4,7 @@ import background from '../assets/background.jpg';
 import { Link } from 'react-router-dom';
 import CarCard from '../components/CarCard';
 import NavBar from '../components/NavBar';
+import { backendUrl } from '../config/ip';
 
 const HomePage = () => {
   const [cars, setCars] = useState([]);
@@ -15,7 +16,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/car?max=7');
+        const response = await axios.get(`${backendUrl}/car?max=7`);
         setCars(response.data);
       } catch (error) {
         console.error('Error fetching cars:', error);

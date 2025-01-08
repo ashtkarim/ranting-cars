@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { backendUrl } from '../config/ip';
 const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -32,7 +33,7 @@ const Register = () => {
         e.preventDefault();
         try {
             const response = await axios.post(
-                'http://localhost:4000/auth/register', {
+                `${backendUrl}/auth/register`, {
                 name,
                 email,
                 password,

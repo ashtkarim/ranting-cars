@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import NavBar from "../components/NavBar";
+import { backendUrl } from "../config/ip";
 const MyCars = () => {
     const [mycars, setMycars] = useState([])
     const token = localStorage.getItem("Token")
     useEffect(() => {
         const fetchMyCars = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/car/mycars', {
+                const response = await axios.get(`${backendUrl}/car/mycars`, {
                     headers: {
                         'Token': token,
                     },
@@ -24,7 +25,7 @@ const MyCars = () => {
     const OnDelete = async (id) => {
         try {
             console.log(`Attempting to delete car with id: ${id}`);
-            const response = await axios.delete(`http://localhost:4000/car/${id}`, {
+            const response = await axios.delete(`${backendUrl}/car/${id}`, {
                 headers: {
                     "Token": token
                 }

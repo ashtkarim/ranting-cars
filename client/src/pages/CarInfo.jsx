@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { backendUrl } from "../config/ip";
 
 
 const CarInfo = () => {
@@ -10,7 +11,7 @@ const CarInfo = () => {
     useEffect(() => {
         const fetchCars = async () => {
             try {
-                const response = await axios.get(`http://localhost:4000/car/${id}`);
+                const response = await axios.get(`${backendUrl}/car/${id}`);
                 console.log(response.data)
                 setCar(response.data);
             } catch (error) {
@@ -23,7 +24,7 @@ const CarInfo = () => {
 
     const loadAgencyInfo = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:4000/agency/${id}`);
+            const response = await axios.get(`${backendUrl}/agency/${id}`);
             console.log(response.data)
             setAgency(response.data);
         } catch (error) {

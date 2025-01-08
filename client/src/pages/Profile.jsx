@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
+import { backendUrl } from '../config/ip';
 
 const Profile = () => {
     const [profile, setProfile] = useState({})
     useEffect(() => {
         const fetchCars = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/auth/me', {
+                const response = await axios.get(`${backendUrl}/auth/me`, {
                     headers: {
                         'Token': localStorage.getItem('Token'),
                     },

@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { backendUrl } from '../config/ip';
 
 const AuthContext = createContext();
 
@@ -13,7 +14,7 @@ const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const response = await axios.post('http://localhost:4000/auth/login', { email, password });
+            const response = await axios.post(`${backendUrl}/auth/login`, { email, password });
             localStorage.setItem('Token', response.headers.get('Token'));
             setIsAuthenticated(true);
             navigate('/');

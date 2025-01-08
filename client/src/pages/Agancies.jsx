@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
+import { backendUrl } from '../config/ip';
 
 const Agancies = () => {
     const [agencies, setAgencies] = useState([]);
     useEffect(() => {
         const fetchAgencies = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/agency');
+                const response = await axios.get(`${backendUrl}/agency`);
                 setAgencies(response.data);
                 console.log(response.data);
             } catch (err) {
