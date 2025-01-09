@@ -35,7 +35,6 @@ export const login = async (req: Request, res: Response) => {
     });
     if (findUser && (await bcrypt.compare(password, findUser.password))) {
       const token: string = generateToken(findUser.id);
-      console.log(token);
       res.set("Token", token);
       return res.status(200).json({
         message: "Login successful",

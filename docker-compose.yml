@@ -1,12 +1,15 @@
 version: "3.9"
 
 services:
-
   mongodb:
     image: mongo
     container_name: database
     ports:
       - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=ranting_car
     volumes:
       - ./data:/data/db
     networks:
@@ -20,8 +23,11 @@ services:
     volumes:
       - ./server:/app
     environment:
-      - MONGO_URL=mongodb://mongodb:27017/ranting_car
-      - JWT_TOKEN="1234hello"
+      - DB_USR=admin
+      - DB_PASS=password
+      - DB_SERVER=mongodb
+      - DB_NAME=ranting_car
+      - JWT_TOKEN=1234hello
     depends_on:
       - mongodb
     networks:
