@@ -10,6 +10,7 @@ const HomePage = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem('Token');
+  console.log(backendUrl)
 
 
   // Fetch cars from the API
