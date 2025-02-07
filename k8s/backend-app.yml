@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  backend-url: backend-service
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,7 +25,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: 
+        image: karim2053/ranting-cars-backend
         ports:
         - containerPort: 4000
         env:
@@ -48,6 +57,7 @@ kind: Service
 metadata:
   name: backend-service
 spec:
+  type: ClusterIP
   selector:
     app: backend
   ports:

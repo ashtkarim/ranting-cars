@@ -8,24 +8,23 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: backend
+      app: frontend  
   template:
     metadata:
       labels:
-        app: backend
+        app: frontend  
     spec:
       containers:
-      - name: backend
-        image: 
+      - name: frontend
+        image: karim2053/ranting-cars-frontend  
         ports:
-        - containerPort: 3000
+        - containerPort: 3000  
         env:
         - name: REACT_APP_BACKEND_URL
           valueFrom:
             configMapKeyRef:
               name: backend-config
               key: backend-url
-
 ---
 
 apiVersion: v1
@@ -33,9 +32,10 @@ kind: Service
 metadata:
   name: frontend-service
 spec:
+  type: LoadBalancer  
   selector:
-    app: frontend
+    app: frontend  
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 3000
+      port: 80  
+      targetPort: 3000  
