@@ -1,3 +1,13 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  REACT_APP_BACKEND_URL: "http://backend-service:4000" 
+
+---
+# Frontend Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,37 +15,46 @@ metadata:
   labels:
     app: frontend
 spec:
-  replicas: 3
+  replicas: 3 
   selector:
     matchLabels:
-      app: frontend  
+      app: frontend
   template:
     metadata:
       labels:
-        app: frontend  
+        app: frontend
     spec:
       containers:
       - name: frontend
-        image: karim2053/ranting-cars-frontend  
+        image: karim2053/ranting-cars-frontend
         ports:
-        - containerPort: 3000  
+        - containerPort: 3000
         env:
         - name: REACT_APP_BACKEND_URL
           valueFrom:
             configMapKeyRef:
-              name: backend-config
-              key: backend-url
----
+              name: frontend-config 
+              key: REACT_APP_BACKEND_URL
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
 
+
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: frontend-service
 spec:
-  type: LoadBalancer  
+  type: ClusterIP 
   selector:
-    app: frontend  
+    app: frontend
   ports:
     - protocol: TCP
-      port: 80  
-      targetPort: 3000  
+      port: 80
+      targetPort: 3000
+

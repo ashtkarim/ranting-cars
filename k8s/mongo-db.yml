@@ -1,11 +1,13 @@
+# ConfigMap for MongoDB URL
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mongo-config
 data:
-  mongo-url: mongo-service
+  MONGO_URL: "mongodb://mongo-service:27017/RantingCar"
 
 ---
+# MongoDB Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -38,9 +40,16 @@ spec:
             secretKeyRef:
               name: mongo-secret
               key: mongo-password
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1"
 
 ---
-
+# MongoDB Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -52,3 +61,4 @@ spec:
     - protocol: TCP
       port: 27017
       targetPort: 27017
+  type: ClusterIP
